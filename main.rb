@@ -4,7 +4,7 @@ def my_each
     return to_enum(:my_each) unless block_given?
     counter = 0
     while counter < to_a.length
-        yield to_a[count]
+        yield to_a[counter]
         counter += 1
     end
     self
@@ -30,4 +30,18 @@ def my_select
     end
 
 
-        
+def my_all?(value = nil)
+    if(block_given?)  
+    to_a.my_each{ |i| return false if yield(i) == false }   
+    return true
+    elsif value.nil?
+    to_a.my_each { |i| return false if i.nil? || i == false }
+    elsif !value.nil? && (value.is_a? Class)
+    to_a.my_each { |i| return false unless i.is_a? value }
+    elsif !value.nil? && value.instance_of?(Regexp)
+    to_a.my_each { |i| return false unless value.match(i) }
+    else
+    to_a.my_each { |i| return false if i != value }
+   end
+  true
+end
