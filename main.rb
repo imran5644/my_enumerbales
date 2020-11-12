@@ -66,3 +66,15 @@ def my_any(param=nil)
 def my_none(value=nil, &block)
     !to_a.my_any?(value, &block)
 end
+
+def my_count(value = nil)
+    count = 0
+    if block_given?
+      to_a.my_each { |i| count += 1 if yield(i) }
+    elsif value.nil?
+      count = to_a.length
+    else
+      count = to_a.my_select { |i| i == value }.length
+    end
+    count
+  end
