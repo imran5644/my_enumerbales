@@ -61,3 +61,8 @@ def my_any(param=nil)
     end
   false
   end
+
+
+def my_none(value=nil, &block)
+    !to_a.my_any?(value, &block)
+end
