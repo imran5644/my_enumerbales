@@ -78,3 +78,16 @@ def my_count(value = nil)
     end
     count
   end
+
+  
+  def my_map(proc = nil)
+    return to_enum(:my_map) unless block_given? || !proc.nil?
+
+    array = []
+    if proc.nil?
+      to_a.my_each { |i| array.push(yield(i)) }
+    else
+      to_a.my_each { |i| array.push(proc.call(i)) }
+    end
+    array
+  end
