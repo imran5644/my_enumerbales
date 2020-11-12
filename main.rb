@@ -20,3 +20,14 @@ def my_each_with_index
     end 
     self
 end
+
+def my_select
+    return to_enum(:my_select) unless block_given?
+
+    arr = []
+    to_a.my_each{ |item| arr << item  if yield(item) || yield(item[0]) && instance_of?(Hash) }
+    instance_of?(Hash) ? arr.to_h : arr
+    end
+
+
+        
