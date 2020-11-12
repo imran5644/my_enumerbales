@@ -45,3 +45,19 @@ def my_all?(value = nil)
    end
   true
 end
+
+def my_any(param=nil)
+    if(block_given?)
+    to_a.my_each { |i| return true if yield(i) }
+    return false
+    elseif param.nil?
+    to_a.my_each{ |i| return true if i }
+    elsif param is _a? Class
+    to_a.my_each { |i| return true if i.is_a? param }
+    elsif param.instance_of(Regexp)
+    to_a.my_each { |i| return true unless param.match(i).nil? }
+    else
+    to_a.my_each{ |i| return true if param == true }
+    end
+  false
+  end
